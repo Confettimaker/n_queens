@@ -4,6 +4,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+//Prints board
 void print_board(int ** board, int n)
 {
   cout << "  ---";
@@ -26,6 +27,7 @@ void print_board(int ** board, int n)
   cout << endl;
 }
 
+//Checks if valid location to place a queen
 bool valid(int ** board, int x, int y, int n)
 {
   bool room_right = false;
@@ -94,6 +96,7 @@ bool valid(int ** board, int x, int y, int n)
   return true;
 }
 
+//Returns number of queens currently present on board
 int num_queens(int ** board, int n)
 {
   int count = 0;
@@ -108,15 +111,24 @@ int num_queens(int ** board, int n)
   return count;
 }
 
+//Recursive backtracking function
+//Does the heavy lifting
 bool solve(int ** board, int x, int y, int n)
 {
+  //If N queens are on the board, it has been solved.
   if (num_queens(board, n) == n)
     return true;
+  
+  //For every row in the board
   for (int i = 0;i < n;i++)
   {
+    //If current row and col is a valid position
     if (valid(board, x, i, n))
     {
+      //Place a queen at current position
       board[i][x] = 1;
+
+      //If we were unable to solve, remove the queen
       if (!solve(board, x + 1, i, n))
         board[i][x] = 0;
       else
@@ -135,6 +147,8 @@ int main()
 
   cout << "How many queens? : ";
   cin >> n;
+
+  //Dynamically allocating a 2D array
   int ** board = new int * [n];
 
   for (int y = 0;y < n;y++)
@@ -144,6 +158,7 @@ int main()
       board[y][x] = 0;
   }
 
+  //Entering recursive function
   solved = solve(board, 0, 0, n);
 
   if (solved)
