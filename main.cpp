@@ -110,7 +110,6 @@ int num_queens(int ** board, int n)
 
 bool solve(int ** board, int x, int y, int n)
 {
-  bool solved = false;
   if (num_queens(board, n) == n)
     return true;
   for (int i = 0;i < n;i++)
@@ -118,8 +117,7 @@ bool solve(int ** board, int x, int y, int n)
     if (valid(board, x, i, n))
     {
       board[i][x] = 1;
-      solved = solve(board, x + 1, i, n);
-      if (!solved)
+      if (!solve(board, x + 1, i, n))
         board[i][x] = 0;
       else
         return true;
@@ -133,10 +131,11 @@ bool solve(int ** board, int x, int y, int n)
 int main()
 {
   int n;
+  bool solved = false;
+
   cout << "How many queens? : ";
   cin >> n;
   int ** board = new int * [n];
-  bool solved = false;
 
   for (int y = 0;y < n;y++)
   {
