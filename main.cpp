@@ -94,29 +94,15 @@ bool valid(int ** board, int x, int y, int n)
   return true;
 }
 
-//Returns number of queens currently present on board
-int num_queens(int ** board, int n)
-{
-  int count = 0;
-  for (int y = 0;y < n;y++)
-  {
-    for (int x = 0;x < n;x++)
-    {
-      if (board[y][x] == 1)
-        count ++;
-    }
-  }
-  return count;
-}
-
 //Recursive backtracking function
 //Does the heavy lifting
 bool solve(int ** board, int x, int y, int n)
 {
+  static int num_queens = 0;
   //If N queens are on the board, it has been solved.
-  if (num_queens(board, n) == n)
+  if (num_queens == n)
     return true;
-  
+
   //For every row in the board
   for (int i = 0;i < n;i++)
   {
@@ -125,10 +111,14 @@ bool solve(int ** board, int x, int y, int n)
     {
       //Place a queen at current position
       board[i][x] = 1;
+      num_queens ++;
 
       //If we were unable to solve, remove the queen
       if (!solve(board, x + 1, i, n))
+      {
         board[i][x] = 0;
+        num_queens --;
+      }
       else
         return true;
     }
