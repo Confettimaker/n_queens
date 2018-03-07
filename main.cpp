@@ -7,21 +7,15 @@ using std::cin;
 //Prints board
 void print_board(int ** board, int n)
 {
-  for (int x = 0;x < n;x++)
-    cout << "----";
-  cout << '-' << endl;
+  cout << endl;
   for (int y = 0;y < n;y++)
   {
-    cout << "| ";
     for (int x = 0;x < n;x++)
     {
-      cout << board[y][x] << " | ";
+      cout << '\t' <<  board[y][x];
     }
-    cout << endl;
+    cout << endl << endl << endl << endl;
   }
-  for (int x = 0;x < n;x++)
-    cout << "----";
-  cout << '-' << endl;
   cout << endl;
 }
 
